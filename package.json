@@ -1,6 +1,26 @@
 {
   "name": "ngx-scroll-class",
-  "version": "0.0.0",
+  "author": {
+    "name": "laxersnine (Davis Yang)",
+    "email": "laxersnine@gmail.com",
+    "url": "https://github.com/laxersnine"
+  },
+  "bugs": {
+    "url": "https://github.com/laxersnine/ngx-scroll-class/issues"
+  },
+  "description": "An Angular directive for spy on elements whether they were scrolled into(out) the screen, and append classes.",
+  "homepage": "https://github.com/laxersnine/ngx-scroll-class",
+  "keywords": [
+    "angular",
+    "extension",
+    "scroll",
+    "class attribute"
+  ],
+  "repository": {
+    "url": "git+https://github.com/laxersnine/ngx-scroll-class",
+    "type": "git"
+  },
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -8,9 +28,10 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "packagr": "ng-packagr -p ng-package.json"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/animations": "^4.2.4",
     "@angular/common": "^4.2.4",
@@ -41,6 +62,7 @@
     "karma-coverage-istanbul-reporter": "^1.2.1",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "ng-packagr": "^1.5.0-rc.1",
     "protractor": "~5.1.2",
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
