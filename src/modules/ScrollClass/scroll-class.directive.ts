@@ -3,7 +3,8 @@ import { DOCUMENT } from '@angular/platform-browser';
 
 @Directive({ selector: '[scrollClass]' })
 export class ScrollClassDirective implements AfterViewInit, OnChanges {
-    @Input() className: string;
+    @Input() inScreenClassName = '';
+    @Input() outScreenClassName = '';
     @Input() containerToObserve: any;
     @Input() repeatAnimate = true;
     @HostBinding('class') bindingClass: string;
@@ -40,10 +41,10 @@ export class ScrollClassDirective implements AfterViewInit, OnChanges {
                         this.containerHeight = this.containerToObserve.clientHeight;
                         this.containerPosition = this.containerToObserve.offsetTop;
                         if (this.isScrolledIntoView(this.element)) {
-                            this.bindingClass = this.className;
+                            this.bindingClass = this.inScreenClassName;
                             this.hasAnimated = true;
                         } else {
-                            this.bindingClass = '';
+                            this.bindingClass = this.outScreenClassName;
                         }
                     }
                 });
@@ -56,10 +57,10 @@ export class ScrollClassDirective implements AfterViewInit, OnChanges {
                         this.containerScrollTop = window.scrollY;
                         this.containerHeight = window.innerHeight;
                         if (this.isScrolledIntoView(this.element)) {
-                            this.bindingClass = this.className;
+                            this.bindingClass = this.inScreenClassName;
                             this.hasAnimated = true;
                         } else {
-                            this.bindingClass = '';
+                            this.bindingClass = this.outScreenClassName;
                         }
                     }
                 });
