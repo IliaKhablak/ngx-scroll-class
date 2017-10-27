@@ -119,7 +119,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/demo/app/ScrollDemo/window.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div style=\"background-color: coral; height:1000px; width: 20%\"></div>\r\n<div scrollClass style=\"background-color: aqua; height:400px; width: 20%\" className=\"animated fadeInDown\" [repeatAnimate]=\"true\">Repeat: true</div>\r\n<div scrollClass style=\"background-color: red; height:400px; width: 20%\" className=\"animated fadeInDown\" [repeatAnimate]=\"false\">Repeat: false</div>"
+module.exports = "<div style=\"background-color: coral; height:1000px; width: 20%\"></div>\r\n<div scrollClass style=\"background-color: aqua; height:400px; width: 20%\" inScreenClassName=\"animated fadeInDown\" [repeatAnimate]=\"true\">Repeat: true</div>\r\n<div scrollClass style=\"background-color: red; height:400px; width: 20%\" inScreenClassName=\"animated fadeInDown\" [repeatAnimate]=\"false\">Repeat: false</div>"
 
 /***/ }),
 
@@ -392,7 +392,6 @@ var ScrollClassDirective = (function () {
         }
         if (this.containerToObserve) {
             this.renderer.listen(this.containerToObserve, 'scroll', function () {
-                console.log('element scroll');
                 if (!_this.hasAnimated || _this.repeatAnimate) {
                     _this.containerScrollTop = _this.containerToObserve.scrollTop;
                     _this.containerHeight = _this.containerToObserve.clientHeight;
@@ -409,7 +408,6 @@ var ScrollClassDirective = (function () {
         }
         else {
             this.renderer.listen('window', 'scroll', function () {
-                console.log('no');
                 if (!_this.hasAnimated || _this.repeatAnimate) {
                     _this.containerScrollTop = window.scrollY;
                     _this.containerHeight = window.innerHeight;
@@ -429,7 +427,6 @@ var ScrollClassDirective = (function () {
         var bottom = top + this.containerHeight;
         var eleTop = element.nativeElement.offsetTop - this.containerPosition;
         var eleBottom = eleTop + element.nativeElement.clientHeight;
-        console.log("top: " + top + ", bottom: " + bottom + ", eleTop: " + eleTop + ", eleBot: " + eleBottom);
         return ((eleBottom <= bottom + 1) && (eleTop >= top));
     };
     return ScrollClassDirective;

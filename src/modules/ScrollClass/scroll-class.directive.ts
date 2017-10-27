@@ -35,7 +35,6 @@ export class ScrollClassDirective implements AfterViewInit, OnChanges {
             this.renderer.listen(this.containerToObserve,
                 'scroll',
                 () => {
-                    console.log('element scroll');
                     if (!this.hasAnimated || this.repeatAnimate) {
                         this.containerScrollTop = this.containerToObserve.scrollTop;
                         this.containerHeight = this.containerToObserve.clientHeight;
@@ -52,7 +51,6 @@ export class ScrollClassDirective implements AfterViewInit, OnChanges {
             this.renderer.listen('window',
                 'scroll',
                 () => {
-                    console.log('no');
                     if (!this.hasAnimated || this.repeatAnimate) {
                         this.containerScrollTop = window.scrollY;
                         this.containerHeight = window.innerHeight;
@@ -73,8 +71,6 @@ export class ScrollClassDirective implements AfterViewInit, OnChanges {
 
         const eleTop = element.nativeElement.offsetTop - this.containerPosition;
         const eleBottom = eleTop + element.nativeElement.clientHeight;
-
-        console.log(`top: ${top}, bottom: ${bottom}, eleTop: ${eleTop}, eleBot: ${eleBottom}`);
 
         return ((eleBottom <= bottom + 1) && (eleTop >= top));
     }

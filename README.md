@@ -1,5 +1,9 @@
 # NgxScrollClass
 
+The scroll spy on html elements for Angular 4.
+
+See live demo on: https://laxersnine.github.io/ngx-scroll-class/
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.9.
 
 ## Using
