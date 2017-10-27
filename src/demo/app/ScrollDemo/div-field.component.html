@@ -1,0 +1,13 @@
+<div style="overflow-y: scroll; height:300px;" #container>
+    <h2>Pass by template reference variable </h2>
+    <div style="background-color: coral; height:400px; width: 20%"></div>
+    <div scrollClass style="background-color: aqua; height:200px; width: 20%" className="animated shake" [repeatAnimate]="true" [containerToObserve]="templateElement">Repeat: true</div>
+    <div scrollClass style="background-color: red; height:200px; width: 20%" className="animated shake" [repeatAnimate]="false" [containerToObserve]="templateElement">Repeat: false</div>
+</div>
+
+<div style="overflow-y: scroll; height:300px;" container>
+        <h2>Pass by query selector </h2>
+        <div style="background-color: coral; height:400px; width: 20%"></div>
+        <div scrollClass style="background-color: aqua; height:200px; width: 20%" className="animated shake" [repeatAnimate]="true" [containerToObserve]="queryElement">Repeat: true</div>
+        <div scrollClass style="background-color: red; height:200px; width: 20%" className="animated shake" [repeatAnimate]="false" [containerToObserve]="queryElement">Repeat: false</div>
+</div>

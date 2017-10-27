@@ -5,7 +5,7 @@
   },
   "apps": [
     {
-      "root": "src",
+      "root": "src/demo",
       "outDir": "dist",
       "assets": [
         "assets",
@@ -17,7 +17,7 @@
       "test": "test.ts",
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
-      "prefix": "app",
+      "prefix": "",
       "styles": [
         "styles.css"
       ],
@@ -36,15 +36,15 @@
   },
   "lint": [
     {
-      "project": "src/tsconfig.app.json",
+      "project": "src/demo/tsconfig.app.json",
       "exclude": "**/node_modules/**"
     },
     {
-      "project": "src/tsconfig.spec.json",
+      "project": "src/demo/tsconfig.spec.json",
       "exclude": "**/node_modules/**"
     },
     {
-      "project": "e2e/tsconfig.e2e.json",
+      "project": "e2e/demo/tsconfig.e2e.json",
       "exclude": "**/node_modules/**"
     }
   ],
