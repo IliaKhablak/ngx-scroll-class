@@ -30,9 +30,68 @@ Then the `animated shake` will be appended to img class when the image appears o
 
 *   `inScreenClassName`: Classes to be added when the element is scrolled into the screen. The default value is empty.
 *   `outScreenClassName`: Classes to be added when the element is scrolled out of the screen. The default value is empty.
-*   `containerToObserve`: The container to observe. This is for the cases that the element is in a scrollable container like div, instead of window.
+*   `containerToObserve`: The container to observe. This is for the cases that the element is in a scrollable container like `div`, instead of `window`.
     The default value would be dom window object.
 *   `repeatAnimate`: Append class to the element each time to scroll into(out) or just once.
+
+#### `containerToObserve`
+
+1.  Use template reference variable:
+
+    *   html:
+
+            <div style="overflow-y: scroll; height:300px;" #scrollableContainer>
+                <div style="height:300px">other element</div>
+                <div scrollClass inScreenClassName="class1 class2 class3" [containerToObserve]="templateElement">element to spy</div>
+                <div style="height:300px">other element</div>
+            </div>
+    *   component:
+
+            import { Component, AfterViewInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+            @component({......})
+            export class SomeComponent implements AfterViewInit {
+                @ViewChild('scrollableContainer') container: ElementRef;
+                templateElement: any;
+
+                ngAfterViewInit(): void {
+                    setTimeout(() => {
+                    this.templateElement = this.container.nativeElement;
+                    }, 0);
+                }
+            }
+
+2.  Use `querySelector`
+
+    *   html:
+
+            <div style="overflow-y: scroll; height:300px;" scrollableContainer>
+                <div style="height:300px">other element</div>
+                <div scrollClass inScreenClassName="class1 class2 class3" [containerToObserve]="templateElement">element to spy</div>
+                <div style="height:300px">other element</div>
+            </div>
+
+    *   component:
+
+            import { Component, AfterViewInit, Inject, Renderer2 } from '@angular/core';
+            import { DOCUMENT } from '@angular/platform-browser';
+
+            @Component({......})
+
+            export class SomeComponent implements AfterViewInit {
+                templateElement: any;
+
+                constructor(
+                    private readonly renderer: Renderer2,
+                    @Inject(DOCUMENT) private readonly doc: any
+                ) { }
+
+                ngAfterViewInit(): void {
+                        setTimeout(() => {
+                            this.templateElement = this.doc.querySelector('[scrollableContainer]');
+                        }, 0);
+                }
+            }
+
 
 # Example
 
