@@ -20,7 +20,7 @@
     "url": "git+https://github.com/laxersnine/ngx-scroll-class",
     "type": "git"
   },
-  "version": "1.0.0",
+  "version": "1.1.1",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -29,7 +29,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "packagr": "ng-packagr -p ng-package.json & npm pack ./dist & npm publish"
+    "packagr": "ng-packagr -p ng-package.json & npm pack ./dist"
   },
   "private": false,
   "dependencies": {

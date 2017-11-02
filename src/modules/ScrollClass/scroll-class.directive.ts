@@ -1,4 +1,16 @@
-import { Directive, Input, Inject, HostBinding, AfterViewInit, ElementRef, Renderer2, SimpleChanges, OnChanges } from '@angular/core';
+import {
+    Directive,
+    Input,
+    Output,
+    Inject,
+    HostBinding,
+    AfterViewInit,
+    ElementRef,
+    Renderer2,
+    SimpleChanges,
+    OnChanges,
+    EventEmitter
+} from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 
 @Directive({ selector: '[scrollClass]' })
@@ -7,6 +19,7 @@ export class ScrollClassDirective implements AfterViewInit, OnChanges {
     @Input() outScreenClassName = '';
     @Input() containerToObserve: any;
     @Input() repeatAnimate = true;
+    @Output() scrollIn = new EventEmitter();
     @HostBinding('class') bindingClass: string;
     isBrowser: boolean = typeof document === 'object' && !!document;
     containerScrollTop = 0;
@@ -42,6 +55,7 @@ export class ScrollClassDirective implements AfterViewInit, OnChanges {
                         if (this.isScrolledIntoView(this.element)) {
                             this.bindingClass = this.inScreenClassName;
                             this.hasAnimated = true;
+                            this.scrollIn.emit(this.element);
                         } else {
                             this.bindingClass = this.outScreenClassName;
                         }
