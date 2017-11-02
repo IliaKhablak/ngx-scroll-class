@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/ngx-scroll-class.svg)](https://www.npmjs.com/package/ngx-scroll-class)
+
 # NgxScrollClass
 
 The scroll spy on html elements for Angular 4.
