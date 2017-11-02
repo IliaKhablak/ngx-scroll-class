@@ -30,11 +30,17 @@ Then the `animated shake` will be appended to img class when the image appears o
 
 ## API
 
+### Input
+
 *   `inScreenClassName`: Classes to be added when the element is scrolled into the screen. The default value is empty.
 *   `outScreenClassName`: Classes to be added when the element is scrolled out of the screen. The default value is empty.
 *   `containerToObserve`: The container to observe. This is for the cases that the element is in a scrollable container like `div`, instead of `window`.
     The default value would be dom window object.
 *   `repeatAnimate`: Append class to the element each time to scroll into(out) or just once.
+
+### Output
+
+*   `scrollIn`: Be fired when the element is scrolled to the view. The directive emits the element itself.
 
 #### `containerToObserve`
 
