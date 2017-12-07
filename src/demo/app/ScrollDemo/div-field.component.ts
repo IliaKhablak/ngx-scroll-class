@@ -1,5 +1,4 @@
-import { Component, AfterViewInit, Inject, ViewChild, ElementRef, Renderer2 } from '@angular/core';
-import { DOCUMENT } from '@angular/platform-browser';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'div-field',
@@ -7,20 +6,10 @@ import { DOCUMENT } from '@angular/platform-browser';
     styleUrls: ['./div-field.component.css']
 })
 
-export class DivFieldComponent implements AfterViewInit {
-    @ViewChild('container') container: ElementRef;
+export class DivFieldComponent {
     templateElement: any;
     queryElement: any;
 
     constructor(
-        private readonly renderer: Renderer2,
-        @Inject(DOCUMENT) private readonly doc: any
     ) { }
-
-    ngAfterViewInit(): void {
-            setTimeout(() => {
-                this.templateElement = this.container.nativeElement;
-                this.queryElement = this.doc.querySelector('[container]');
-            }, 0);
-    }
 }

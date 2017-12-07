@@ -19,7 +19,7 @@ import { ScrollService } from './scroll.service';
 export class ScrollClassDirective implements AfterViewInit, OnChanges, OnInit {
     @Input() inScreenClassName = '';
     @Input() outScreenClassName = '';
-    @Input() containerToObserve: string;
+    @Input() containerName: string;
     @Input() repeatAnimate = true;
     @Output() scrollIn = new EventEmitter();
     containerScrollTop = 0;
@@ -59,10 +59,10 @@ export class ScrollClassDirective implements AfterViewInit, OnChanges, OnInit {
             return;
         }
 
-        const container = this.scrollService.getContainer(this.containerToObserve);
+        const container = this.scrollService.getContainer(this.containerName);
 
         if (container) {
-            this.scrollService.observeScroll(this.containerToObserve).subscribe(
+            this.scrollService.observeScroll(this.containerName).subscribe(
                 (e: any) => {
                     if (!this.hasAnimated || this.repeatAnimate) {
                         this.containerScrollTop = e.scrollTop;

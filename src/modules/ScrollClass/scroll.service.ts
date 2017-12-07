@@ -8,7 +8,7 @@ import { ScrollContainers } from './scroll-container.model';
 @Injectable()
 export class ScrollService {
 
-    private containers: ScrollContainers;
+    private containers: ScrollContainers = new ScrollContainers();
 
     get isBrowser() { return typeof document === 'object' && !!document; }
 
@@ -24,7 +24,7 @@ export class ScrollService {
 
     observeScroll(containerName: string): Observable<any> {
         if (!!this.containers[containerName]) {
-            return Observable.fromEvent(this.containers[containerName], 'scroll');
+            return Observable.fromEvent(this.containers[containerName], 'scroll', e => e.target);
         }
         return null;
     }

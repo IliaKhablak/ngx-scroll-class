@@ -4,7 +4,7 @@ import { ScrollService } from './scroll.service';
 
 @Directive({ selector: '[scrollContainer]' })
 export class ScrollContainerDirective implements OnInit {
-    @Input() scrollContainer: string;
+    @Input() scrollContainer;
 
     constructor(
         private readonly element: ElementRef,
