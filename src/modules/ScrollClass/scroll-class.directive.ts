@@ -9,23 +9,25 @@ import {
     Renderer2,
     SimpleChanges,
     OnChanges,
-    EventEmitter
+    EventEmitter,
+    OnInit
 } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
 import { ScrollService } from './scroll.service';
 
 @Directive({ selector: '[scrollClass]' })
-export class ScrollClassDirective implements AfterViewInit, OnChanges {
+export class ScrollClassDirective implements AfterViewInit, OnChanges, OnInit {
     @Input() inScreenClassName = '';
     @Input() outScreenClassName = '';
     @Input() containerToObserve: string;
     @Input() repeatAnimate = true;
     @Output() scrollIn = new EventEmitter();
-    @HostBinding('class') bindingClass: string;
     containerScrollTop = 0;
     containerHeight = 0;
     containerPosition = 0;
     hasAnimated = false;
+    originalClass: string;
+    isElementInView: boolean;
 
     constructor(
         @Inject(DOCUMENT) private readonly doc: any,
@@ -33,6 +35,20 @@ export class ScrollClassDirective implements AfterViewInit, OnChanges {
         private readonly renderer: Renderer2,
         private readonly scrollService: ScrollService
     ) { }
+
+    ngOnInit() {
+        if (this.scrollService.isBrowser) {
+            this.originalClass = this.element.nativeElement.className;
+        }
+    }
+
+    @HostBinding('class') get bindingClass(){
+        let cls = this.originalClass;
+        if (this.repeatAnimate || this.hasAnimated) {
+            return cls = cls + ' ' + (this.isElementInView ? this.inScreenClassName : this.outScreenClassName);
+        }
+        return cls.trim();
+    }
 
     ngOnChanges(changes: SimpleChanges): void {
         this.ngAfterViewInit();
@@ -53,11 +69,11 @@ export class ScrollClassDirective implements AfterViewInit, OnChanges {
                         this.containerHeight = e.clientHeight;
                         this.containerPosition = e.offsetTop;
                         if (this.isScrolledIntoView(this.element)) {
-                            this.bindingClass = this.handleClassName(this.bindingClass, this.inScreenClassName, this.outScreenClassName);
+                            this.isElementInView = true;
                             this.hasAnimated = true;
                             this.scrollIn.emit(this.element);
                         } else {
-                            this.bindingClass = this.handleClassName(this.bindingClass, this.outScreenClassName, this.inScreenClassName);
+                            this.isElementInView = false;
                         }
                     }
                 });
@@ -69,29 +85,15 @@ export class ScrollClassDirective implements AfterViewInit, OnChanges {
                         this.containerScrollTop = window.scrollY;
                         this.containerHeight = window.innerHeight;
                         if (this.isScrolledIntoView(this.element)) {
-                            this.bindingClass = this.handleClassName(this.bindingClass, this.inScreenClassName, this.outScreenClassName);
+                            this.isElementInView = true;
                             this.hasAnimated = true;
                             this.scrollIn.emit(this.element);
                         } else {
-                            this.bindingClass = this.handleClassName(this.bindingClass, this.outScreenClassName, this.inScreenClassName);
+                            this.isElementInView = false;
                         }
                     }
                 });
         }
-    }
-
-    handleClassName(className: string, classToAppend: string, classToRemove: string) {
-        let result = className ? className : classToAppend;
-
-        if (result.indexOf(classToAppend) >= 0) {
-            result = className.replace(classToRemove, '').trim();
-        } else {
-            result = className.replace(classToRemove, classToAppend);
-
-            if (result === className) { result += ' ' + classToAppend; }
-        }
-
-        return result;
     }
 
     isScrolledIntoView(element: ElementRef): boolean {
