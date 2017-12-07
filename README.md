@@ -12,7 +12,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 *   Install the npm module:
 
-        npm install ngx-scroll-class --save
+        npm i ngx-scroll-class --save
 
 *   Import ScrollClassModule on the module that you want to use the directive.
 
@@ -22,84 +22,39 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
             imports: [ScrollClassModule]
         })
 
-*   Use directive to spy on any element.
+*   Use `scrollClass` directive to spy on any element in `window`.
 
         <img name="elementToSpy" src="" alt="" scrollClass inScreenClassName="animated shake"/>
+
+*   Or use `scrollContainer` directive so that you can spy on elements in a scrollable container like `<div>`
+
+        <div scrollContainer="container">
+            <img name="elementToSpy" src="" alt="" scrollClass inScreenClassName="animated shake" containerName="container"/>
+        </div>
 
 Then the `animated shake` will be appended to img class when the image appears on the screen by scroll.
 
 ## API
 
-### Input
+### ScrollContainerDirective
+
+#### Input
+
+*   `scrollContainer`: The container name which to make ScrollClassDirective understand who it belongs to.
+
+### ScrollClassDirective
+
+#### Input
 
 *   `inScreenClassName`: Classes to be added when the element is scrolled into the screen. The default value is empty.
 *   `outScreenClassName`: Classes to be added when the element is scrolled out of the screen. The default value is empty.
-*   `containerToObserve`: The container to observe. This is for the cases that the element is in a scrollable container like `div`, instead of `window`.
-    The default value would be dom window object.
+*   `containerName`: The container to observe. This is for the cases that the element is in a scrollable container like `div`, instead of `window`.
+    The default value would be dom `window` object.
 *   `repeatAnimate`: Append class to the element each time to scroll into(out) or just once.
 
-### Output
+#### Output
 
 *   `scrollIn`: Be fired when the element is scrolled to the view. The directive emits the element itself.
-
-#### `containerToObserve`
-
-1.  Use template reference variable:
-
-    *   html:
-
-            <div style="overflow-y: scroll; height:300px;" #scrollableContainer>
-                <div style="height:300px">other element</div>
-                <div scrollClass inScreenClassName="class1 class2 class3" [containerToObserve]="templateElement">element to spy</div>
-                <div style="height:300px">other element</div>
-            </div>
-    *   component:
-
-            import { Component, AfterViewInit, ViewChild, ElementRef, Renderer2 } from '@angular/core';
-            @component({......})
-            export class SomeComponent implements AfterViewInit {
-                @ViewChild('scrollableContainer') container: ElementRef;
-                templateElement: any;
-
-                ngAfterViewInit(): void {
-                    setTimeout(() => {
-                    this.templateElement = this.container.nativeElement;
-                    }, 0);
-                }
-            }
-
-2.  Use `querySelector`
-
-    *   html:
-
-            <div style="overflow-y: scroll; height:300px;" scrollableContainer>
-                <div style="height:300px">other element</div>
-                <div scrollClass inScreenClassName="class1 class2 class3" [containerToObserve]="templateElement">element to spy</div>
-                <div style="height:300px">other element</div>
-            </div>
-
-    *   component:
-
-            import { Component, AfterViewInit, Inject, Renderer2 } from '@angular/core';
-            import { DOCUMENT } from '@angular/platform-browser';
-
-            @Component({......})
-
-            export class SomeComponent implements AfterViewInit {
-                templateElement: any;
-
-                constructor(
-                    private readonly renderer: Renderer2,
-                    @Inject(DOCUMENT) private readonly doc: any
-                ) { }
-
-                ngAfterViewInit(): void {
-                        setTimeout(() => {
-                            this.templateElement = this.doc.querySelector('[scrollableContainer]');
-                        }, 0);
-                }
-            }
-
 
 # Example
 
@@ -108,23 +63,3 @@ Download the source code in this repo, run `ng serve` and navigate to `http://lo
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
