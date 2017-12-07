@@ -34,9 +34,7 @@ export class ScrollClassDirective implements AfterViewInit, OnChanges {
     ) { }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes['containerToObserve']) {
-            this.ngAfterViewInit();
-        }
+        this.ngAfterViewInit();
     }
 
     ngAfterViewInit(): void {
@@ -53,11 +51,11 @@ export class ScrollClassDirective implements AfterViewInit, OnChanges {
                         this.containerHeight = this.containerToObserve.clientHeight;
                         this.containerPosition = this.containerToObserve.offsetTop;
                         if (this.isScrolledIntoView(this.element)) {
-                            this.bindingClass = this.inScreenClassName;
+                            this.bindingClass = this.handleClassName(this.bindingClass, this.inScreenClassName, this.outScreenClassName);
                             this.hasAnimated = true;
                             this.scrollIn.emit(this.element);
                         } else {
-                            this.bindingClass = this.outScreenClassName;
+                            this.bindingClass = this.handleClassName(this.bindingClass, this.outScreenClassName, this.inScreenClassName);
                         }
                     }
                 });
@@ -69,14 +67,29 @@ export class ScrollClassDirective implements AfterViewInit, OnChanges {
                         this.containerScrollTop = window.scrollY;
                         this.containerHeight = window.innerHeight;
                         if (this.isScrolledIntoView(this.element)) {
-                            this.bindingClass = this.inScreenClassName;
+                            this.bindingClass = this.handleClassName(this.bindingClass, this.inScreenClassName, this.outScreenClassName);
                             this.hasAnimated = true;
+                            this.scrollIn.emit(this.element);
                         } else {
-                            this.bindingClass = this.outScreenClassName;
+                            this.bindingClass = this.handleClassName(this.bindingClass, this.outScreenClassName, this.inScreenClassName);
                         }
                     }
                 });
         }
+    }
+
+    handleClassName(className: string, classToAppend: string, classToRemove: string) {
+        let result = className ? className : classToAppend;
+
+        if (result.indexOf(classToAppend) >= 0) {
+            result = className.replace(classToRemove, '').trim();
+        } else {
+            result = className.replace(classToRemove, classToAppend);
+
+            if (result === className) { result += ' ' + classToAppend; }
+        }
+
+        return result;
     }
 
     isScrolledIntoView(element: ElementRef): boolean {
