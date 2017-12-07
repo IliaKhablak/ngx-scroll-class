@@ -21,9 +21,6 @@ export class DivFieldComponent implements AfterViewInit {
             setTimeout(() => {
                 this.templateElement = this.container.nativeElement;
                 this.queryElement = this.doc.querySelector('[container]');
-
-                console.log(this.templateElement);
-                console.log(this.queryElement);
             }, 0);
     }
 }

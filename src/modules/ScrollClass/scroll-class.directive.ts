@@ -12,16 +12,16 @@ import {
     EventEmitter
 } from '@angular/core';
 import { DOCUMENT } from '@angular/platform-browser';
+import { ScrollService } from './scroll.service';
 
 @Directive({ selector: '[scrollClass]' })
 export class ScrollClassDirective implements AfterViewInit, OnChanges {
     @Input() inScreenClassName = '';
     @Input() outScreenClassName = '';
-    @Input() containerToObserve: any;
+    @Input() containerToObserve: string;
     @Input() repeatAnimate = true;
     @Output() scrollIn = new EventEmitter();
     @HostBinding('class') bindingClass: string;
-    isBrowser: boolean = typeof document === 'object' && !!document;
     containerScrollTop = 0;
     containerHeight = 0;
     containerPosition = 0;
@@ -30,7 +30,8 @@ export class ScrollClassDirective implements AfterViewInit, OnChanges {
     constructor(
         @Inject(DOCUMENT) private readonly doc: any,
         private readonly element: ElementRef,
-        private readonly renderer: Renderer2
+        private readonly renderer: Renderer2,
+        private readonly scrollService: ScrollService
     ) { }
 
     ngOnChanges(changes: SimpleChanges): void {
@@ -38,18 +39,19 @@ export class ScrollClassDirective implements AfterViewInit, OnChanges {
     }
 
     ngAfterViewInit(): void {
-        if (!this.isBrowser) {
+        if (!this.scrollService.isBrowser) {
             return;
         }
 
-        if (this.containerToObserve) {
-            this.renderer.listen(this.containerToObserve,
-                'scroll',
-                () => {
+        const container = this.scrollService.getContainer(this.containerToObserve);
+
+        if (container) {
+            this.scrollService.observeScroll(this.containerToObserve).subscribe(
+                (e: any) => {
                     if (!this.hasAnimated || this.repeatAnimate) {
-                        this.containerScrollTop = this.containerToObserve.scrollTop;
-                        this.containerHeight = this.containerToObserve.clientHeight;
-                        this.containerPosition = this.containerToObserve.offsetTop;
+                        this.containerScrollTop = e.scrollTop;
+                        this.containerHeight = e.clientHeight;
+                        this.containerPosition = e.offsetTop;
                         if (this.isScrolledIntoView(this.element)) {
                             this.bindingClass = this.handleClassName(this.bindingClass, this.inScreenClassName, this.outScreenClassName);
                             this.hasAnimated = true;
