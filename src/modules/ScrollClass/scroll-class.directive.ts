@@ -59,9 +59,16 @@ export class ScrollClassDirective implements AfterViewInit, OnChanges, OnInit {
             return;
         }
 
-        const container = this.scrollService.getContainer(this.containerName);
+        let container = this.scrollService.getContainer(this.containerName);
 
-        if (container) {
+        if (!container) {
+            container = this.doc.querySelector('[scrollContainer="' + this.containerName + '"]');
+            if (!!container) {
+                this.scrollService.pushContainer(this.containerName, container);
+            }
+        }
+
+        if (!!container) {
             this.scrollService.observeScroll(this.containerName).subscribe(
                 (e: any) => {
                     if (!this.hasAnimated || this.repeatAnimate) {
