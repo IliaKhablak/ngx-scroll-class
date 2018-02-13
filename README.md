@@ -14,21 +14,27 @@ See live demo on: https://laxersnine.github.io/ngx-scroll-class/
 
 *   Import ScrollClassModule on the module that you want to use the directive.
 
-        import { ScrollClassModule } from 'ngx-scroll-class';
+```typescript
+import { ScrollClassModule } from 'ngx-scroll-class';
 
-        @ngModule({
-            imports: [ScrollClassModule]
-        })
+@ngModule({
+    imports: [ScrollClassModule]
+})
+```
 
 *   Use `scrollClass` directive to spy on any element in `window`.
 
-        <img name="elementToSpy" src="" alt="" scrollClass inScreenClassName="animated shake"/>
+```html
+<img name="elementToSpy" src="" alt="" scrollClass inScreenClassName="animated shake"/>
+```
 
 *   Or use `scrollContainer` directive so that you can spy on elements in a scrollable container like `<div>`
 
-        <div scrollContainer="container">
-            <img name="elementToSpy" src="" alt="" scrollClass inScreenClassName="animated shake" containerName="container"/>
-        </div>
+```html
+<div scrollContainer="container">
+    <img name="elementToSpy" src="" alt="" scrollClass inScreenClassName="animated shake" containerName="container"/>
+ </div>
+```
 
 Then the `animated shake` will be appended to img class when the image appears on the screen by scroll.
 
