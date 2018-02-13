@@ -43,9 +43,9 @@ export class ScrollClassDirective implements AfterViewInit, OnChanges, OnInit {
     }
 
     @HostBinding('class') get bindingClass(){
-        let cls = this.originalClass;
+        const cls = this.originalClass;
         if (this.repeatAnimate || this.hasAnimated) {
-            return cls = cls + ' ' + (this.isElementInView ? this.inScreenClassName : this.outScreenClassName);
+            return cls + ' ' + (this.isElementInView ? this.inScreenClassName : this.outScreenClassName);
         }
         return cls.trim();
     }
